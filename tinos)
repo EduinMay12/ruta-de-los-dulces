@@ -1,0 +1,34 @@
+[90m= [39m[34;4mIlluminate\Database\Eloquent\Collection[39;24m {#7406
+    [34mall[39m: [
+      [34;4mApp\Models\Ruta[39;24m {#7413
+        [34mid[39m: [35m1[39m,
+        [34mnombre[39m: [32m"[39m[32mRuta Francisco de Montejo[39m[32m"[39m,
+        [34mdescripcion[39m: [32m"[39m[32mRuta de prueba para Halloween[39m[32m"[39m,
+        [34mtipo[39m: [32m"[39m[32mHalloween[39m[32m"[39m,
+        [34mfecha_inicio[39m: [32m"[39m[32m2026-10-31[39m[32m"[39m,
+        [34mfecha_fin[39m: [32m"[39m[32m2026-11-01[39m[32m"[39m,
+        [34mactiva[39m: [35m1[39m,
+        [34mmensaje[39m: [32m"[39m[32m¡Dulces para todos![39m[32m"[39m,
+        [34musuario_id[39m: [36mnull[39m,
+        [34mcreated_at[39m: [32m"[39m[32m2026-10-04 01:04:47[39m[32m"[39m,
+        [34mupdated_at[39m: [32m"[39m[32m2026-10-04 01:04:47[39m[32m"[39m,
+        [34mdestinos[39m: [34;4mIlluminate\Database\Eloquent\Collection[39;24m {#8243
+          [34mall[39m: [
+            [34;4mApp\Models\Destino[39;24m {#7528
+              [34mid[39m: [35m1[39m,
+              [34mnombre[39m: [32m"[39m[32mCasa Fantasma[39m[32m"[39m,
+              [34mdescripcion[39m: [32m"[39m[32mPrimer lugar de prueba[39m[32m"[39m,
+              [34mdireccion[39m: [32m"[39m[32mFrancisco de Montejo[39m[32m"[39m,
+              [34mlatitud[39m: [32m"[39m[32m20.9990000[39m[32m"[39m,
+              [34mlongitud[39m: [32m"[39m[32m-89.6500000[39m[32m"[39m,
+              [34mabierto[39m: [35m1[39m,
+              [34morden[39m: [35m1[39m,
+              [34mruta_id[39m: [35m1[39m,
+              [34mcreated_at[39m: [32m"[39m[32m2026-10-04 01:05:13[39m[32m"[39m,
+              [34mupdated_at[39m: [32m"[39m[32m2026-10-04 01:05:13[39m[32m"[39m,
+            },
+          ],
+        },
+      },
+    ],
+  }
