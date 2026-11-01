@@ -18,6 +18,18 @@
         content="{{ csrf_token() }}"
     >
 
+    {{-- Icono --}}
+    <link 
+        rel="shortcut icon" 
+        href="{{ asset('ico/calabaza.ico') }}" 
+    >
+
+    <link 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" 
+        rel="stylesheet"
+    >
+
+
     {{-- Tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -92,6 +104,36 @@
 </head>
 
 <body>
+
+    {{-- ============================================
+         EFECTOS ATMOSFÉRICOS
+    ============================================ --}}
+
+    <div
+        id="stormEffect"
+        class="storm-effect"
+        aria-hidden="true"
+        >
+
+        {{-- Relámpago global --}}
+        <div
+            id="lightningFlash"
+            class="lightning-flash">
+        </div>
+
+        {{-- Resplandor del cielo --}}
+        <div
+            id="lightningSky"
+            class="lightning-sky">
+        </div>
+
+        {{-- Lluvia --}}
+        <div
+            id="rainContainer"
+            class="rain-container">
+        </div>
+
+    </div>
 
     {{-- =====================================================
          PAGE LOADER - RUTAS DE LOS DULCES
@@ -199,12 +241,8 @@
                     <div class="floating-brand-info">
 
                         <strong>
-                            Rutas de los Dulces
+                            Ruta de Dulces
                         </strong>
-
-                        <span>
-                            Halloween 2026
-                        </span>
 
                     </div>
 
@@ -219,7 +257,7 @@
                 <div
                     class="route-search"
                     id="routeSearch"
-                >
+                    >
 
                     <div class="route-search-box">
 
@@ -311,13 +349,18 @@
                                 : ''
                             }}
                         "
-                    >
-                        Inicio
+                        >
+                        <span>
+                            <i class="fa-solid fa-layer-group"></i>
+                        </span>
+                        <strong>
+                            Inicio
+                        </strong>
                     </a>
 
 
 
-                    {{-- MAPA --}}
+                    {{-- RUTAS --}}
 
                     <a
                         href="{{ route('home') }}"
@@ -328,8 +371,13 @@
                                 : ''
                             }}
                         "
-                    >
-                        Mapa
+                        >
+                        <span>
+                            <i class="fa-solid fa-compass"></i> 
+                        </span>
+                        <strong>
+                            Rutas
+                        </strong>
                     </a>
 
 
@@ -343,7 +391,7 @@
                         id="mobileSearchButton"
                         class="mobile-search-button"
                         aria-label="Buscar rutas"
-                    >
+                        >
 
                         <svg viewBox="0 0 24 24">
                             <circle
@@ -371,7 +419,7 @@
                             class="nav-menu-button"
                             aria-label="Abrir menú"
                             aria-expanded="false"
-                        >
+                            >
 
                             <span class="nav-menu-icon">
                                 •••
@@ -425,7 +473,7 @@
                                         <div class="dropdown-item-left">
 
                                             <span class="dropdown-icon">
-                                                ◈
+                                                <i class="fa-solid fa-unlock-keyhole"></i>
                                             </span>
 
                                             <span>
@@ -449,7 +497,7 @@
                                 type="button"
                                 id="themeToggle"
                                 class="dropdown-item"
-                            >
+                                >
 
                                 <div class="dropdown-item-left">
 
@@ -491,12 +539,12 @@
                                             : ''
                                         }}
                                     "
-                                >
+                                    >
 
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ◫
+                                            <i class="fa-solid fa-shield"></i>
                                         </span>
 
                                         <span>
@@ -533,7 +581,7 @@
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ◫
+                                            <i class="fa-solid fa-heart"></i>
                                         </span>
 
                                         <span>
@@ -561,7 +609,7 @@
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ?
+                                            <i class="fa-solid fa-circle-info"></i>
                                         </span>
 
                                         <span>
@@ -597,7 +645,7 @@
                                         <div class="dropdown-item-left">
 
                                             <span class="dropdown-icon">
-                                                ↗
+                                                <i class="fa-solid fa-right-from-bracket"></i>
                                             </span>
 
                                             <span>
@@ -624,7 +672,7 @@
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ◫
+                                            <i class="fa-solid fa-shield"></i>
                                         </span>
 
                                         <span>
@@ -646,7 +694,7 @@
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ◫
+                                            <i class="fa-solid fa-heart"></i>
                                         </span>
 
                                         <span>
@@ -668,7 +716,7 @@
                                     <div class="dropdown-item-left">
 
                                         <span class="dropdown-icon">
-                                            ?
+                                            <i class="fa-solid fa-circle-info"></i>
                                         </span>
 
                                         <span>
@@ -827,7 +875,7 @@
                 <div class="footer-brand-text">
 
                     <strong>
-                        Rutas de los Dulces
+                        Ruta de Dulces
                     </strong>
 
                     <span>
@@ -855,19 +903,13 @@
             <div class="footer-tech">
 
                 <span>
-                    Laravel
+                    Halloween 
                 </span>
 
                 <i></i>
 
                 <span>
-                    MySQL
-                </span>
-
-                <i></i>
-
-                <span>
-                    Leaflet
+                    2026
                 </span>
 
             </div>
@@ -903,6 +945,363 @@
         document.addEventListener(
             'DOMContentLoaded',
             function () {
+
+                // =====================================
+                // CONTADORES
+                // =====================================
+
+                const counters =
+                    document.querySelectorAll(
+                        '.counter'
+                    );
+
+
+                counters.forEach(function(counter) {
+
+                    const objetivo =
+                        Number(
+                            counter.dataset.value
+                        );
+
+
+                    let actual = 0;
+
+
+                    if (objetivo === 0) {
+
+                        counter.textContent = '0';
+
+                        return;
+
+                    }
+
+
+                    const incremento =
+                        Math.max(
+                            1,
+                            Math.ceil(
+                                objetivo / 35
+                            )
+                        );
+
+
+                    const timer =
+                        setInterval(
+                            function () {
+
+                                actual += incremento;
+
+
+                                if (
+                                    actual >= objetivo
+                                ) {
+
+                                    actual = objetivo;
+
+                                    clearInterval(
+                                        timer
+                                    );
+
+                                }
+
+
+                                counter.textContent =
+                                    actual;
+
+                            },
+                            35
+                        );
+
+                });
+
+
+                // =====================================
+                // SCROLL REVEAL
+                // =====================================
+
+                const observer =
+                    new IntersectionObserver(
+
+                        function(entries) {
+
+                            entries.forEach(
+                                function(entry) {
+
+                                    if (
+                                        entry.isIntersecting
+                                    ) {
+
+                                        entry.target
+                                            .classList
+                                            .add('visible');
+
+                                    }
+
+                                }
+                            );
+
+                        },
+
+                        {
+                            threshold: 0.15
+                        }
+
+                    );
+
+
+                document
+                    .querySelectorAll('.reveal')
+                    .forEach(
+                        function(element) {
+
+                            observer.observe(
+                                element
+                            );
+
+                        }
+                    );
+
+
+                // ==========================================
+                // LLUVIA HALLOWEEN
+                // ==========================================
+
+                const rainContainer =
+                    document.getElementById(
+                        'rainContainer'
+                    );
+
+
+                if (rainContainer) {
+
+                    // Menos gotas en celular
+                    const cantidadGotas =
+                        window.innerWidth <= 768
+                            ? 55
+                            : 100;
+
+
+                    for (
+                        let i = 0;
+                        i < cantidadGotas;
+                        i++
+                    ) {
+
+                        const drop =
+                            document.createElement(
+                                'div'
+                            );
+
+
+                        drop.classList.add(
+                            'rain-drop'
+                        );
+
+
+                        // ==================================
+                        // PROFUNDIDAD
+                        // ==================================
+
+                        const profundidad =
+                            Math.random();
+
+
+                        if (profundidad > .70) {
+
+                            drop.classList.add(
+                                'rain-near'
+                            );
+
+                        } else if (
+                            profundidad > .35
+                        ) {
+
+                            drop.classList.add(
+                                'rain-middle'
+                            );
+
+                        } else {
+
+                            drop.classList.add(
+                                'rain-far'
+                            );
+
+                        }
+
+
+                        // ==================================
+                        // POSICIÓN
+                        // ==================================
+
+                        drop.style.left =
+                            Math.random() * 100 + '%';
+
+
+                        // ==================================
+                        // VELOCIDAD
+                        // ==================================
+
+                        const duracion =
+                            0.7 +
+                            Math.random() * 0.8;
+
+
+                        drop.style.animationDuration =
+                            duracion + 's';
+
+
+                        // ==================================
+                        // RETRASO
+                        // ==================================
+
+                        drop.style.animationDelay =
+                            -(Math.random() * 2) + 's';
+
+
+                        rainContainer.appendChild(
+                            drop
+                        );
+
+                    }
+
+                }
+
+
+                // ==========================================
+                // RELÁMPAGOS
+                // ==========================================
+
+                const lightningFlash =
+                    document.getElementById(
+                        'lightningFlash'
+                    );
+
+
+                const lightningSky =
+                    document.getElementById(
+                        'lightningSky'
+                    );
+
+
+                function lanzarRelampago() {
+
+                    if (
+                        !lightningFlash ||
+                        !lightningSky
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    // ======================================
+                    // REINICIAR ANIMACIÓN
+                    // ======================================
+
+                    lightningFlash
+                        .classList
+                        .remove('active');
+
+
+                    lightningSky
+                        .classList
+                        .remove('active');
+
+
+                    /*
+                     * Forzar al navegador a recalcular
+                     * el elemento para poder reiniciar
+                     * la animación CSS.
+                     */
+
+                    void lightningFlash.offsetWidth;
+
+
+                    // ======================================
+                    // ACTIVAR RELÁMPAGO
+                    // ======================================
+
+                    lightningFlash
+                        .classList
+                        .add('active');
+
+
+                    lightningSky
+                        .classList
+                        .add('active');
+
+
+                    // ======================================
+                    // QUITAR RELÁMPAGO
+                    // ======================================
+
+                    setTimeout(
+                        function () {
+
+                            lightningFlash
+                                .classList
+                                .remove('active');
+
+
+                            lightningSky
+                                .classList
+                                .remove('active');
+
+                        },
+
+                        800
+                    );
+
+
+                    // ======================================
+                    // SIGUIENTE RELÁMPAGO
+                    // ENTRE 4 Y 12 SEGUNDOS
+                    // ======================================
+
+                    const siguiente =
+                        4000 +
+                        Math.random() * 8000;
+
+
+                    setTimeout(
+                        lanzarRelampago,
+                        siguiente
+                    );
+
+                }
+
+
+                // ==========================================
+                // INICIAR TORMENTA
+                // ==========================================
+
+                if (
+                    lightningFlash &&
+                    lightningSky
+                ) {
+
+                    /*
+                     * Primer relámpago entre
+                     * 1.5 y 4 segundos.
+                     */
+
+                    const primerRelampago =
+                        1500 +
+                        Math.random() * 2500;
+
+
+                    setTimeout(
+                        lanzarRelampago,
+                        primerRelampago
+                    );
+
+                }
+
+                // ==========================================
+                // Cambio a modo Dark y White
+                // ==========================================
+
 
                 const button =
                     document.getElementById(
@@ -1019,9 +1418,6 @@
             }
         );
 
-    </script>
-
-    <script>
         (function () {
 
             const loader =
@@ -1424,9 +1820,7 @@
             );
 
         })();
-    </script>
 
-    <script>
         $(function () {
 
             const buscarUrl = @json(route('rutas.buscar'));
@@ -2039,6 +2433,7 @@
             );
 
         });
+
     </script>
 
 </body>

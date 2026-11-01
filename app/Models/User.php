@@ -63,4 +63,9 @@ class User extends Authenticatable
         return $this->tieneRol('superadmin');
     }
 
+    public function rutas()
+    {
+        return $this->hasMany(Ruta::class, 'usuario_id');
+    }
+
 }

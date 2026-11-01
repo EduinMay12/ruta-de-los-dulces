@@ -27,16 +27,20 @@ class Ruta extends Model
         'activa' => 'boolean',
     ];
 
-    public function destinos()
-    {
-        return $this->hasMany(Destino::class)
-            ->orderBy('orden');
-    }
-
     public function propuestas(): HasMany
     {
         return $this->hasMany(
             PropuestaDestino::class
         );
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
+    public function destinos()
+    {
+        return $this->hasMany(Destino::class, 'ruta_id');
     }
 }

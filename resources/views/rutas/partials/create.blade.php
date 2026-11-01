@@ -37,6 +37,14 @@
             @csrf
 
 
+            <input
+                id="rutaUser"
+                type="hidden"
+                value="{{ $usuarioId }}"
+                name="usuario_id"
+                required
+                >
+
             <div class="admin-modal-body">
 
 

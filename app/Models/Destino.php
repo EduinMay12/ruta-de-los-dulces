@@ -29,6 +29,6 @@ class Destino extends Model
 
     public function ruta()
     {
-        return $this->belongsTo(Ruta::class);
+        return $this->belongsTo(Ruta::class, 'ruta_id');
     }
 }

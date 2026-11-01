@@ -27,13 +27,10 @@ class PropuestaDestino extends Model
     ];
 
 
-    public function ruta(): BelongsTo
+    public function ruta()
     {
-        return $this->belongsTo(
-            Ruta::class
-        );
+        return $this->belongsTo(Ruta::class, 'ruta_id');
     }
-
 
     public function participante(): BelongsTo
     {

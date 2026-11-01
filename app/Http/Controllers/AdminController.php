@@ -5,43 +5,53 @@ namespace App\Http\Controllers;
 use App\Models\Ruta;
 use App\Models\Destino;
 use App\Models\PropuestaDestino;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $totalRutas = Ruta::count();
+        $totalRutas = Auth::user()->rutas()->count();
 
-        $rutasActivas = Ruta::where(
-            'activa',
-            true
-        )->count();
+        $usuarioId = Auth::id();
 
-        $totalDestinos =
-            Destino::count();
+        // Estadísticas del usuario autenticado
+        $rutasActivas = Ruta::where('usuario_id', $usuarioId)
+            ->where('activa', true)
+            ->count();
 
-        $lugaresAbiertos =
-            Destino::where(
-                'abierto',
-                true
-            )->count();
+        $totalDestinos = Destino::whereHas('ruta', function ($query) use ($usuarioId) {
+            $query->where('usuario_id', $usuarioId);
+        })->count();
 
+        $lugaresAbiertos = Destino::where('abierto', true)
+            ->whereHas('ruta', function ($query) use ($usuarioId) {
+                $query->where('usuario_id', $usuarioId);
+            })
+            ->count();
 
-        $rutas = Ruta::with('destinos')
+        // Únicamente las rutas registradas por el usuario
+        $rutas = Ruta::where('usuario_id', $usuarioId)
+            ->with('destinos')
             ->latest()
             ->get();
 
+        // Únicamente los destinos de las rutas del usuario
+        $destinos = Destino::whereHas('ruta', function ($query) use ($usuarioId) {
+            $query->where('usuario_id', $usuarioId);
+        })
+            ->with('ruta')
+            ->latest()
+            ->get();
 
-        $destinos =
-            Destino::with('ruta')
-                ->latest()
-                ->get();
-
-        $propuestasPendientes =
-            PropuestaDestino::where(
-                'estado',
-                'pendiente'
-            )->count();
+        // Propuestas pendientes del usuario (si la tabla tiene usuario_id)
+        $propuestasPendientes = PropuestaDestino::whereIn(
+            'ruta_id',
+            $rutas->pluck('id')
+        )
+            ->where('estado', 'pendiente')
+            ->count();
+            
 
         return view(
             'admin.index',
@@ -52,7 +62,8 @@ class AdminController extends Controller
                 'lugaresAbiertos',
                 'rutas',
                 'destinos',
-                'propuestasPendientes'
+                'propuestasPendientes',
+                'usuarioId'
             )
         );
     }

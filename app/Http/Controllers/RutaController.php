@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class RutaController extends Controller
 {
@@ -64,8 +65,13 @@ class RutaController extends Controller
 
     public function create()
     {
+        $usuarioId = Auth::id();
+
         return view(
-            'rutas.partials.create'
+            'rutas.partials.create',
+            compact(
+                'usuarioId'
+            )
         );
     }
 
@@ -78,6 +84,8 @@ class RutaController extends Controller
 
     public function store(Request $request)
     {
+        $usuarioId = Auth::id();
+
         $validated = $request->validate([
 
             'nombre' =>
@@ -97,6 +105,9 @@ class RutaController extends Controller
 
             'mensaje' =>
                 'nullable|string|max:500',
+
+            'usuario_id' =>
+                'required|string|max:50',
 
         ]);
 
@@ -158,8 +169,9 @@ class RutaController extends Controller
         }
 
         $ruta->load([
-            'destinos' => function ($query) {
-                $query->orderBy('orden');
+            'destinos' => function ($query) use ($ruta) {
+                $query->where('ruta_id', $ruta->id)
+                      ->orderBy('orden', 'asc');
             }
         ]);
 
@@ -207,7 +219,6 @@ class RutaController extends Controller
             compact('ruta')
         );
     }
-
 
     public function update(
         Request $request,
