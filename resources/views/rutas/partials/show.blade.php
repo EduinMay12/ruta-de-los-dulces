@@ -965,25 +965,18 @@
                     className:
                         'ghost-marker-container',
 
-                    html: `
-
-                        <div
-                            class="ghost-marker-hover"
-                        >
-
-                            <div
-                                class="ghost-marker"
-                            >
-                                🎃
+                   html: `
+                        <div class="ghost-marker-hover">
+                            <div class="ghost-marker">
+                                <img
+                                    src="{{ asset('ico/calabaza.ico') }}"
+                                    alt="Marcador de Halloween"
+                                    class="ghost-marker-img"
+                                >
                             </div>
 
-                            <div
-                                class="ghost-shadow"
-                            >
-                            </div>
-
+                            <div class="ghost-shadow"></div>
                         </div>
-
                     `,
 
                     iconSize: [
@@ -1015,13 +1008,13 @@
                         'closed-marker-container',
 
                     html: `
-
-                        <div
-                            class="closed-marker"
-                        >
-                        🪦
+                        <div class="closed-marker">
+                            <img
+                                src="{{ asset('ico/tumba.ico') }}"
+                                alt="Lugar cerrado"
+                                class="closed-marker-img"
+                            >
                         </div>
-
                     `,
 
                     iconSize: [
